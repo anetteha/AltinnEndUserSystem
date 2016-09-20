@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using BadASBusiness.GiveMeSome;
+using BadASBusiness.HowYouDoin;
 
 
 namespace BadASBusiness
@@ -14,7 +15,7 @@ namespace BadASBusiness
         static void Main(string[] args)
         {
             var rand = new Random();
-            using (var sendForm = new GiveMeSome.IntermediaryInboundExternalBasicClient())
+            using (var sendForm = new IntermediaryInboundExternalBasicClient())
             {
                 var respons = sendForm.SubmitFormTaskBasic("9151", "Testinator123", null, null, null, null,
                     new FormTaskShipmentBE
@@ -36,8 +37,15 @@ namespace BadASBusiness
                     });
 
                 var receiptId = respons.ReceiptId;
+                
 
                 Thread.Sleep(200);
+
+                using (var receiptclient = new ReceiptExternalBasicClient())
+                {
+                    var receipt = receiptclient.GetReceiptBasic("9151", "Testinator123", new ReceiptSearchExternal {ReceiptId = receiptId });
+
+                }
             }
         }
     }
