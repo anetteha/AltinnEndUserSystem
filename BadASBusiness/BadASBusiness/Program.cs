@@ -30,7 +30,7 @@ namespace BadASBusiness
                                 Forms = new List<Form>
                                     {
                                         new Form {Completed = false, DataFormatId = "1521", DataFormatVersion = 10634,
-                                            FormData ="<![CDATA[<melding xmlns='http://seres.no/xsd/Kursdomene/LånesøknadJME_M/2011' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'><Innsender><søker><fødselsnummer>aaaaaaaaaaa</fødselsnummer><navn>String</navn></søker></Innsender></melding>]]>",
+                                            FormData ="<melding xmlns='http://seres.no/xsd/Kursdomene/LånesøknadJME_M/2011' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'><Innsender><søker><fødselsnummer>aaaaaaaaaaa</fødselsnummer><navn>String</navn></søker></Innsender></melding>",
                                             EndUserSystemReference = "987654321"}
                                     }.ToArray()
                             }
