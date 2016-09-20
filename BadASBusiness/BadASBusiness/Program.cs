@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using BadASBusiness.GiveMeSome;
 
@@ -12,13 +13,14 @@ namespace BadASBusiness
     {
         static void Main(string[] args)
         {
+            var rand = new Random();
             using (var sendForm = new GiveMeSome.IntermediaryInboundExternalBasicClient())
             {
                 var respons = sendForm.SubmitFormTaskBasic("9151", "Testinator123", null, null, null, null,
                     new FormTaskShipmentBE
                     {
                         Reportee = "910293826",
-                        ExternalShipmentReference = "12346789",
+                        ExternalShipmentReference = rand.Next().ToString(),
                         FormTasks =
                             new FormTask
                             {
@@ -33,7 +35,9 @@ namespace BadASBusiness
                             }
                     });
 
-                var test = respons.ReceiptText;
+                var receiptId = respons.ReceiptId;
+
+                Thread.Sleep(200);
             }
         }
     }
