@@ -47,15 +47,33 @@ namespace BadASBusiness
                     var receipt = receiptclient.GetReceiptBasic("9151", "Testinator123", new ReceiptSearchExternal { ReceiptId = receiptId });
                 }
 
+                var pin = 0;
                 using (var authenticate = new SystemAuthenticationExternalClient())
                 {
-                    var request = new AuthenticationChallengeRequestBE()
+                    AuthenticationChallengeBE auth;
+                    do
                     {
-                        AuthMethod = ""
-                    };
+                        Console.Write("Autehtiser! ");
+                        var input = Console.ReadLine();
 
-                    var auth = authenticate.GetAuthenticationChallenge(request);
+                        var request = new AuthenticationChallengeRequestBE()
+                        {
+                            AuthMethod = "AltinnPin",
+                            UserSSN = "02057901988",
+                            UserPassword = input
+                        };
+
+                        auth = authenticate.GetAuthenticationChallenge(request);
+                        pin = int.Parse(auth.Message.Split(' ')[2]);
+
+                        Console.WriteLine(auth.Status + "  -> " + pin);
+
+                    } while (auth.Status != ChallengeRequestResult.Ok);
+                    Console.ReadLine();
                 }
+
+
+
             }
         }
     }
