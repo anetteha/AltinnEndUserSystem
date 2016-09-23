@@ -15,16 +15,22 @@ namespace BadASBusiness
     {
         static void Main(string[] args)
         {
-            const string ssnEven = "02057901988";
-            const string ssnJulius = "27047800515";
+
+            var activeUser = 2;
+
+            var ssn = activeUser == 1 ? "02057901988" : "27047800515";
+            var password = activeUser == 1 ? "even02057901988" : "julius27047800515";
+            var systemUserName = activeUser == 1 ? "9151" : "9166";
+            var orgnr = activeUser == 1 ? "910293826" : "910294121";
+            var systemPassword = activeUser == 1 ? "Testinator123" : "JTestinator123";
 
             var rand = new Random();
             using (var sendForm = new IntermediaryInboundExternalBasicClient())
             {
-                var respons = sendForm.SubmitFormTaskBasic("9151", "Testinator123", null, null, null, null,
+                var respons = sendForm.SubmitFormTaskBasic(systemUserName, systemPassword, null, null, null, null,
                     new FormTaskShipmentBE
                     {
-                        Reportee = "910293826",
+                        Reportee = orgnr,
                         ExternalShipmentReference = rand.Next().ToString(),
                         FormTasks =
                             new FormTask
@@ -47,7 +53,7 @@ namespace BadASBusiness
 
                 using (var receiptclient = new ReceiptExternalBasicClient())
                 {
-                    var receipt = receiptclient.GetReceiptBasic("9151", "Testinator123", new ReceiptSearchExternal { ReceiptId = receiptId });
+                    var receipt = receiptclient.GetReceiptBasic(systemUserName, systemPassword, new ReceiptSearchExternal { ReceiptId = receiptId });
                 }
 
                 var pin = 0;
@@ -62,7 +68,7 @@ namespace BadASBusiness
                         var request = new AuthenticationChallengeRequestBE()
                         {
                             AuthMethod = "AltinnPin",
-                            UserSSN = ssnEven,
+                            UserSSN = ssn,
                             UserPassword = input
                         };
 
@@ -79,9 +85,8 @@ namespace BadASBusiness
                 {
                     Console.WriteLine("Kode: {0}", pin);
                     var kode = Console.ReadLine();
-                    var response = client.GetCorrespondenceListForArchiveRefBasic("9151", "Testinator123", ssnEven, "even" + ssnEven, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
+                    var response = client.GetCorrespondenceListForArchiveRefBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
                 }
-
             }
         }
     }
