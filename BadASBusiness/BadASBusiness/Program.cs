@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using BadASBusiness.GiveMeSome;
 using BadASBusiness.HowYouDoin;
 using BadASBusiness.Authenticate;
+using BadASBusiness.ReporteeReallyRightRight;
 
 
 namespace BadASBusiness
@@ -25,6 +26,7 @@ namespace BadASBusiness
             var systemPassword = activeUser == 1 ? "Testinator123" : "JTestinator123";
 
             var rand = new Random();
+            ReceiptExternal receipt;
             using (var sendForm = new IntermediaryInboundExternalBasicClient())
             {
                 var respons = sendForm.SubmitFormTaskBasic(systemUserName, systemPassword, null, null, null, null,
@@ -51,9 +53,14 @@ namespace BadASBusiness
 
                 Thread.Sleep(200);
 
+                string archiveId;
                 using (var receiptclient = new ReceiptExternalBasicClient())
                 {
-                    var receipt = receiptclient.GetReceiptBasic(systemUserName, systemPassword, new ReceiptSearchExternal { ReceiptId = receiptId });
+                    receipt = receiptclient.GetReceiptBasic(systemUserName, systemPassword, new ReceiptSearchExternal { ReceiptId = receiptId });
+                    foreach (var reference in receipt.References.Where(reference => reference.ReferenceTypeName == ReferenceType.ArchiveReference))
+                    {
+                        archiveId = reference.ReferenceValue;
+                    }
                 }
 
                 var pin = 0;
@@ -81,11 +88,18 @@ namespace BadASBusiness
                     Console.ReadLine();
                 }
 
-                using (var client = new ReporteeReallyRightRight.ReporteeElementListExternalBasicClient())
+                using (var client = new ReporteeElementListExternalBasicClient())
                 {
                     Console.WriteLine("Kode: {0}", pin);
                     var kode = Console.ReadLine();
-                    var response = client.GetCorrespondenceListForArchiveRefBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
+                    var correspondances = client.GetReporteeElementListBasicV2(systemUserName, systemPassword, ssn, null, null,// , password, kode,
+                           "AltinnPin", new ExternalSearchBEV2
+                           {
+                               Reportee = orgnr,
+                               ToDate = DateTime.Now
+
+                           }, 1044);
+                    //var response = client.GetCorrespondenceListForArchiveRefBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
                 }
             }
         }

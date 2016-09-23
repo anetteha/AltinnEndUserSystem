@@ -62,27 +62,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Service References\ReporteeAgain\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="Service References\ReporteeReallyRightRight\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ReporteeReallyRight\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\ReporteeRight\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\Reportee\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -137,28 +117,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\HowYouDoin\ReceiptExternalBasicSF.wsdl" />
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.FormSetElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.FormSetElementExternalBEV2List.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.GetFormSetElementsExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.GetReporteeElementListExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.ReporteeElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.ReporteeElementBEV2Lis.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\BadASBusiness.ReporteeAgain.TestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeAgain\ReporteeElementListExternalSF.wsdl" />
     <None Include="Service References\ReporteeReallyRightRight\BadASBusiness.ReporteeReallyRightRight.FormSetElementBEList.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -181,72 +139,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ReporteeReallyRightRight\ReporteeElementListExternalBasicSF.wsdl" />
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.FormSetElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.FormSetElementExternalBEV2List.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.GetFormSetElementsBasicV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.GetReporteeElementListBasicV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.ReporteeElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.ReporteeElementBEV2Lis.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\BadASBusiness.ReporteeReallyRight.TestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeReallyRight\ReporteeElementListExternalBasicSF.wsdl" />
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.FormSetElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.FormSetElementExternalBEV2List.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.GetFormSetElementsExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.GetReporteeElementListExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.ReporteeElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.ReporteeElementBEV2Lis.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\BadASBusiness.ReporteeRight.TestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\ReporteeRight\ReporteeElementListExternalSF.wsdl" />
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.FormSetElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.FormSetElementExternalBEV2List.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.GetFormSetElementsExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.GetReporteeElementListExternalV2Response.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.ReporteeElementBEList.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.ReporteeElementBEV2Lis.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\BadASBusiness.Reportee.TestResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\Reportee\ReporteeElementListExternalSF.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -255,11 +147,7 @@
     <WCFMetadataStorage Include="Service References\Authenticate\" />
     <WCFMetadataStorage Include="Service References\GiveMeSome\" />
     <WCFMetadataStorage Include="Service References\HowYouDoin\" />
-    <WCFMetadataStorage Include="Service References\ReporteeAgain\" />
     <WCFMetadataStorage Include="Service References\ReporteeReallyRightRight\" />
-    <WCFMetadataStorage Include="Service References\ReporteeReallyRight\" />
-    <WCFMetadataStorage Include="Service References\ReporteeRight\" />
-    <WCFMetadataStorage Include="Service References\Reportee\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\GiveMeSome\IntermediaryInboundBasic.disco" />
@@ -302,66 +190,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\Authenticate\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Reportee\ReporteeElementListExternal.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Reportee\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Reportee\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\Reportee\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeAgain\ReporteeElementListExternal.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeAgain\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeAgain\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeAgain\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeRight\ReporteeElementListExternal.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeRight\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeRight\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeRight\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeReallyRight\ReporteeElementListExternalBasic.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeReallyRight\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeReallyRight\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\ReporteeReallyRight\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
