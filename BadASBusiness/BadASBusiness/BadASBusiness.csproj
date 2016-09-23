@@ -47,6 +47,11 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\Authenticate\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\GiveMeSome\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -59,7 +64,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\Authenticate\BadASBusiness.Authenticate.AuthenticationChallengeBE.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Authenticate\BadASBusiness.Authenticate.TestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Authenticate\SystemAuthenticationSI.wsdl" />
     <None Include="Service References\GiveMeSome\BadASBusiness.GiveMeSome.CompleteAndSignShipmentBasicResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -103,6 +117,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Authenticate\" />
     <WCFMetadataStorage Include="Service References\GiveMeSome\" />
     <WCFMetadataStorage Include="Service References\HowYouDoin\" />
   </ItemGroup>
@@ -132,6 +147,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\HowYouDoin\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Authenticate\SystemAuthentication.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Authenticate\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Authenticate\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Authenticate\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
