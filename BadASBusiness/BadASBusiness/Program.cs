@@ -15,6 +15,9 @@ namespace BadASBusiness
     {
         static void Main(string[] args)
         {
+            const string ssnEven = "02057901988";
+            const string ssnJulius = "27047800515";
+
             var rand = new Random();
             using (var sendForm = new IntermediaryInboundExternalBasicClient())
             {
@@ -59,7 +62,7 @@ namespace BadASBusiness
                         var request = new AuthenticationChallengeRequestBE()
                         {
                             AuthMethod = "AltinnPin",
-                            UserSSN = "02057901988",
+                            UserSSN = ssnEven,
                             UserPassword = input
                         };
 
@@ -72,7 +75,12 @@ namespace BadASBusiness
                     Console.ReadLine();
                 }
 
-
+                using (var client = new ReporteeReallyRightRight.ReporteeElementListExternalBasicClient())
+                {
+                    Console.WriteLine("Kode: {0}", pin);
+                    var kode = Console.ReadLine();
+                    var response = client.GetCorrespondenceListForArchiveRefBasic("9151", "Testinator123", ssnEven, "even" + ssnEven, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
+                }
 
             }
         }
