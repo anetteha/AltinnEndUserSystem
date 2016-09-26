@@ -92,6 +92,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\genericbatch_2013_06.cs" />
+    <Compile Include="Contracts\OnlineBatchReceipt.cs" />
     <Compile Include="IGetAltinnForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GetAltinnForm.svc.cs">
@@ -100,9 +102,7 @@
     <Compile Include="Messages\PushFormExternalAttachmentResponse.cs" />
     <Compile Include="Messages\PushFormInlineAttachmentResponse.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
