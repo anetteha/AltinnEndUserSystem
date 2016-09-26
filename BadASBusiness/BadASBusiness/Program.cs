@@ -15,7 +15,7 @@ namespace BadASBusiness
         static void Main(string[] args)
         {
 
-            var activeUser = 1;
+            var activeUser = 2;
 
             var ssn = activeUser == 1 ? "02057901988" : "27047800515";
             var password = activeUser == 1 ? "even02057901988" : "julius27047800515";
@@ -97,6 +97,9 @@ namespace BadASBusiness
                                ToDate = DateTime.Now,
                                ArchiveReference = archiveId
                            }, 1044);
+
+                    //..men var det nå denne:
+                    //var response = client.GetCorrespondenceListForArchiveRefBasic(systemUserName, systemPassword, ssn, null, null, "AltinnPin", orgnr, archiveId, DateTime.Now, DateTime.Now.AddDays(10), 1044);
                 }
             }
         }
