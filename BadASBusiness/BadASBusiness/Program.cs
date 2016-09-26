@@ -17,7 +17,7 @@ namespace BadASBusiness
         static void Main(string[] args)
         {
 
-            var activeUser = 2;
+            var activeUser = 1;
 
             var ssn = activeUser == 1 ? "02057901988" : "27047800515";
             var password = activeUser == 1 ? "even02057901988" : "julius27047800515";
@@ -92,14 +92,9 @@ namespace BadASBusiness
                 {
                     Console.WriteLine("Kode: {0}", pin);
                     var kode = Console.ReadLine();
-                    var correspondances = client.GetReporteeElementListBasicV2(systemUserName, systemPassword, ssn, null, null,// , password, kode,
-                           "AltinnPin", new ExternalSearchBEV2
-                           {
-                               Reportee = orgnr,
-                               ToDate = DateTime.Now
 
-                           }, 1044);
-                    //var response = client.GetCorrespondenceListForArchiveRefBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", "", "", DateTime.Now.AddDays(-7), DateTime.Now, 1044);
+                    var response = client.GetCorrespondenceListForReporteeBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", null, DateTime.Now.AddDays(-7), DateTime.Now, 1044);
+                    
                 }
             }
         }
