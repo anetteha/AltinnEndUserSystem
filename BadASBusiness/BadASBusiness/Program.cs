@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using BadASBusiness.GiveMeSome;
 using BadASBusiness.HowYouDoin;
 using BadASBusiness.Authenticate;
@@ -53,7 +51,7 @@ namespace BadASBusiness
 
                 Thread.Sleep(200);
 
-                string archiveId;
+                var archiveId = "";
                 using (var receiptclient = new ReceiptExternalBasicClient())
                 {
                     receipt = receiptclient.GetReceiptBasic(systemUserName, systemPassword, new ReceiptSearchExternal { ReceiptId = receiptId });
@@ -92,9 +90,13 @@ namespace BadASBusiness
                 {
                     Console.WriteLine("Kode: {0}", pin);
                     var kode = Console.ReadLine();
+                    var correspondances = client.GetReporteeElementListBasicV2(systemUserName, systemPassword, ssn, null, null,// , password, kode,
+                           "AltinnPin", new ExternalSearchBEV2
+                           {
+                               Reportee = orgnr,
+                               ToDate = DateTime.Now,
+                               ArchiveReference = archiveId
 
-                    var response = client.GetCorrespondenceListForReporteeBasic(systemUserName, systemPassword, ssn, password, kode, "AltinnPin", null, DateTime.Now.AddDays(-7), DateTime.Now, 1044);
-                    
                 }
             }
         }
