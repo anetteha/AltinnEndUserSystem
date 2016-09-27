@@ -23,12 +23,14 @@ namespace ServiceLibrary
     {
         public ReceiveOnlineBatchExternalAttachmentResponse ReceiveOnlineBatchExternalAttachment(ReceiveOnlineBatchExternalAttachmentRequest request)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(request.Body);
+            Console.ReadLine();
+            return null;
         }
 
-        public Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

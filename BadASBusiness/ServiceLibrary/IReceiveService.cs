@@ -1,17 +1,22 @@
 ﻿
+using System.ServiceModel;
+
 namespace ServiceLibrary
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace = "http://AltInn.no/webservices/", ConfigurationName = "OnlineBatchReceiverSoap")]
+    //[System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    //[System.ServiceModel.ServiceContractAttribute(Namespace = "http://AltInn.no/webservices/", ConfigurationName = "OnlineBatchReceiverSoap")]
+    [ServiceContract(Namespace = "http://AltInn.no/webservices/")]
     public interface OnlineBatchReceiverSoap
     {
 
         // CODEGEN: Generating message contract since element name username from namespace http://AltInn.no/webservices/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Name = "sync", Action = "http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction = "*")]
+        //[System.ServiceModel.OperationContractAttribute(Name = "sync", Action = "http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction = "*")]
+
+        [OperationContract]
         ReceiveOnlineBatchExternalAttachmentResponse ReceiveOnlineBatchExternalAttachment(ReceiveOnlineBatchExternalAttachmentRequest request);
 
-        [System.ServiceModel.OperationContractAttribute(Name = "async", Action = "http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction = "*")]
-        System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request);
+        //[OperationContract]        
+        //System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request);
     }
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -168,23 +173,23 @@ namespace ServiceLibrary
             return retVal.Body.ReceiveOnlineBatchExternalAttachmentResult;
         }
 
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> OnlineBatchReceiverSoap.ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request)
-        {
-            return base.Channel.ReceiveOnlineBatchExternalAttachmentAsync(request);
-        }
+        //[System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        //System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> OnlineBatchReceiverSoap.ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request)
+        //{
+        //    return base.Channel.ReceiveOnlineBatchExternalAttachmentAsync(request);
+        //}
 
-        public System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(string username, string passwd, string receiversReference, long sequenceNumber, string batch, byte[] attachments)
-        {
-            ReceiveOnlineBatchExternalAttachmentRequest inValue = new ReceiveOnlineBatchExternalAttachmentRequest();
-            inValue.Body = new ReceiveOnlineBatchExternalAttachmentRequestBody();
-            inValue.Body.username = username;
-            inValue.Body.passwd = passwd;
-            inValue.Body.receiversReference = receiversReference;
-            inValue.Body.sequenceNumber = sequenceNumber;
-            inValue.Body.batch = batch;
-            inValue.Body.attachments = attachments;
-            return ((OnlineBatchReceiverSoap)(this)).ReceiveOnlineBatchExternalAttachmentAsync(inValue);
-        }
+        //public System.Threading.Tasks.Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(string username, string passwd, string receiversReference, long sequenceNumber, string batch, byte[] attachments)
+        //{
+        //    ReceiveOnlineBatchExternalAttachmentRequest inValue = new ReceiveOnlineBatchExternalAttachmentRequest();
+        //    inValue.Body = new ReceiveOnlineBatchExternalAttachmentRequestBody();
+        //    inValue.Body.username = username;
+        //    inValue.Body.passwd = passwd;
+        //    inValue.Body.receiversReference = receiversReference;
+        //    inValue.Body.sequenceNumber = sequenceNumber;
+        //    inValue.Body.batch = batch;
+        //    inValue.Body.attachments = attachments;
+        //    return ((OnlineBatchReceiverSoap)(this)).ReceiveOnlineBatchExternalAttachmentAsync(inValue);
+        //}
     }
 }
