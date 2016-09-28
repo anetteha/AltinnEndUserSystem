@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web.Services;
-using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
 
@@ -32,8 +31,6 @@ namespace OnlineBatchReceiver
 
             //TODO: Log
             return Response(resultCodeType.FAILED_DO_NOT_RETRY);
-
-
         }
 
         private bool Authenticate(string username, string password)
