@@ -76,21 +76,20 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="xsd\FormTaskSkjema.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="xsd\genericbatch.2013.06.xsd">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="xsd\OnlineBatchReceipt.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="xsd\FormTaskSkjema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="xsd\genericbatch.2013.06.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="xsd\OnlineBatchReceipt.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <PropertyGroup>
