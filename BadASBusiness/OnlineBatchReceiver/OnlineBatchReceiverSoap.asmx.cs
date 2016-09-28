@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Diagnostics;
+using OnlineBatchReceiver;
 
 namespace Mottak
 {
@@ -42,7 +43,6 @@ namespace Mottak
             // Verify batch vs. XSD (Schema verification)
             if (!VerifyBatchSchema(batch))
             {
-
                 return Response(FAILED_DO_NOT_RETRY);
             }
 
@@ -87,10 +87,10 @@ namespace Mottak
 
         private string Response(string message)
         {
-            //TODO build response based on onlinebatchresponse
-
-            var response = "svar fra mottak: " + message;
-            return response;
+            //TODO build response based on onlinebatchresponse           
+            
+            var tempresponse = "Svar fra mottak" + message;
+            return tempresponse;
         }
     }
 }

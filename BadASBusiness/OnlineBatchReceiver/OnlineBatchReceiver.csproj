@@ -65,6 +65,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OnlineBatchReceipt.cs" />
     <Compile Include="OnlineBatchReceiverSoap.asmx.cs">
       <DependentUpon>OnlineBatchReceiverSoap.asmx</DependentUpon>
       <SubType>Component</SubType>
