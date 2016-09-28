@@ -16,10 +16,10 @@ namespace Client.SvcRef {
     public interface OnlineBatchReceiverSoap {
         
         // CODEGEN: Generating message contract since element name username from namespace http://AltInn.no/webservices/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://localhost:8733/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction="*")]
         Client.SvcRef.ReceiveOnlineBatchExternalAttachmentResponse ReceiveOnlineBatchExternalAttachment(Client.SvcRef.ReceiveOnlineBatchExternalAttachmentRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction="*")]
+        [System.ServiceModel.OperationContractAttribute(Action= "http://localhost:8733/webservices/ReceiveOnlineBatchExternalAttachment", ReplyAction="*")]
         System.Threading.Tasks.Task<Client.SvcRef.ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(Client.SvcRef.ReceiveOnlineBatchExternalAttachmentRequest request);
     }
     
