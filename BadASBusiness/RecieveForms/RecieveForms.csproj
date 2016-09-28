@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="svcutil\output.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -103,7 +102,6 @@
     </Compile>
     <Compile Include="Messages\PushFormExternalAttachmentResponse.cs" />
     <Compile Include="Messages\PushFormInlineAttachmentResponse.cs" />
-    <Compile Include="svcutil\OnlineBatchReceiver.cs" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

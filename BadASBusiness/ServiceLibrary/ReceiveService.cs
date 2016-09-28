@@ -21,11 +21,12 @@ namespace ServiceLibrary
 {
     public class ReceiveService : OnlineBatchReceiverSoap
     {
-        public ReceiveOnlineBatchExternalAttachmentResponse ReceiveOnlineBatchExternalAttachment(ReceiveOnlineBatchExternalAttachmentRequest request)
+        public string /*ReceiveOnlineBatchExternalAttachmentResponse*/ ReceiveOnlineBatchExternalAttachment(ReceiveOnlineBatchExternalAttachmentRequest request)
         {
             Console.WriteLine(request.Body);
             Console.ReadLine();
-            return null;
+            //return null;
+            return "yo ";
         }
 
         //public Task<ReceiveOnlineBatchExternalAttachmentResponse> ReceiveOnlineBatchExternalAttachmentAsync(ReceiveOnlineBatchExternalAttachmentRequest request)
