@@ -32,33 +32,65 @@ namespace Mottak
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
-
             // Authenticate username + passw
             if (!Authenticate(username, passwd))
             {
                 //TODO: Log
-                return FAILED_DO_NOT_RETRY;
+                return Response(FAILED_DO_NOT_RETRY);
             }
 
             // Verify batch vs. XSD (Schema verification)
             if (!VerifyBatchSchema(batch))
             {
-                return FAILED_DO_NOT_RETRY;
+
+                return Response(FAILED_DO_NOT_RETRY);
             }
 
-            return OK;
+            return Response(OK);
         }
 
         private bool Authenticate(string username, string password)
         {
-            //TODO: Implement
+            //Not much more todo
             return true;
         }
 
         private bool VerifyBatchSchema(string batchXML)
         {
-            //TODO: Verify schema
-            return true;
+            //Validerer skjema med xdocument
+            var result = true;
+            XDocument xdoc;
+
+            try
+            {
+                xdoc = XDocument.Parse(batchXML);
+            }
+            catch (Exception ex)
+            {
+                result = false;
+                //TODO: Log
+                return result;
+            }
+
+            XmlSchemaSet schemaSet = new XmlSchemaSet();
+            schemaSet.Add("", "c:\\genericbatch.2013.06.xsd");  // TODO: Legge til denne filen på en smart måte?
+
+
+            xdoc.Validate(schemaSet, (sender, e) =>
+            {
+                //TODO: Log
+                result = false;
+            });
+
+            return result;
+        }
+
+        private string Response(string message)
+        {
+            //TODO build response based on onlinebatchresponse
+
+            var response = "svar fra mottak: " + message;
+            return response;
         }
     }
 }
