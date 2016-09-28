@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
+using System.Web;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -55,11 +58,10 @@ namespace OnlineBatchReceiver
                 return false;
             }
 
+            var filepath = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+
             var schemaSet = new XmlSchemaSet();
-            schemaSet.Add("", "xsd/genericbatch.2013.06.xsd");
-
-            // TODO: Legge til denne filen på en smart måte?
-
+            schemaSet.Add("", filepath + "/xsd/genericbatch.2013.06.xsd");
 
             xdoc.Validate(schemaSet, (sender, e) =>
             {
