@@ -1,1 +1,1 @@
-﻿<%@ WebService Language="C#" CodeBehind="OnlineBatchReceiverSoap.asmx.cs" Class="Mottak.OnlineBatchReceiverSoap" %>
+﻿<%@ WebService Language="C#" CodeBehind="OnlineBatchReceiverSoap.asmx.cs" Class="OnlineBatchReceiver.OnlineBatchReceiverSoap" %>

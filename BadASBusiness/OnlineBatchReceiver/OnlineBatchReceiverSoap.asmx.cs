@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Web;
 using System.Web.Services;
-using System.IO;
-using System.Configuration;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
-using System.Diagnostics;
-using OnlineBatchReceiver;
 
-namespace Mottak
+namespace OnlineBatchReceiver
 {
     /// <summary>
     /// Summary description for OnlineBatchReceiverSoap
@@ -18,44 +14,35 @@ namespace Mottak
     //[System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-    [System.Web.Services.WebServiceBindingAttribute(Name = "OnlineBatchReceiverSoap", Namespace = "http://AltInn.no/webservices/")]
+    [WebServiceBinding(Name = "OnlineBatchReceiverSoap", Namespace = "http://AltInn.no/webservices/")]
     public class OnlineBatchReceiverSoap : WebService
     {
-        private const string FAILED_DO_NOT_RETRY = "FAILED_DO_NOT_RETRY";
-        private const string FAILED = "FAILED";
-        private const string OK = "OK";
-
         [WebMethod]
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment",
             RequestNamespace = "http://AltInn.no/webservices/",
             ResponseNamespace = "http://AltInn.no/webservices/",
             Use = System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
+        public OnlineBatchReceiptResult ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
             // Authenticate username + passw
-            if (!Authenticate(username, passwd))
-            {
-                //TODO: Log
-                return Response(FAILED_DO_NOT_RETRY);
-            }
+            if (Authenticate(username, passwd))
+                // Verify batch vs. XSD (Schema verification)
+                return Response(!VerifyBatchSchema(batch) ? resultCodeType.FAILED_DO_NOT_RETRY : resultCodeType.OK);
 
-            // Verify batch vs. XSD (Schema verification)
-            if (!VerifyBatchSchema(batch))
-            {
-                return Response(FAILED_DO_NOT_RETRY);
-            }
+            //TODO: Log
+            return Response(resultCodeType.FAILED_DO_NOT_RETRY);
 
-            return Response(OK);
+
         }
 
         private bool Authenticate(string username, string password)
         {
-            //Not much more todo
+            // Trust everyone :)
             return true;
         }
 
-        private bool VerifyBatchSchema(string batchXML)
+        private static bool VerifyBatchSchema(string batchXml)
         {
             //Validerer skjema med xdocument
             var result = true;
@@ -63,17 +50,18 @@ namespace Mottak
 
             try
             {
-                xdoc = XDocument.Parse(batchXML);
+                xdoc = XDocument.Parse(batchXml);
             }
             catch (Exception ex)
             {
-                result = false;
                 //TODO: Log
-                return result;
+                return false;
             }
 
-            XmlSchemaSet schemaSet = new XmlSchemaSet();
-            schemaSet.Add("", "c:\\genericbatch.2013.06.xsd");  // TODO: Legge til denne filen på en smart måte?
+            var schemaSet = new XmlSchemaSet();
+            schemaSet.Add("", "xsd/genericbatch.2013.06.xsd");
+
+            // TODO: Legge til denne filen på en smart måte?
 
 
             xdoc.Validate(schemaSet, (sender, e) =>
@@ -85,12 +73,16 @@ namespace Mottak
             return result;
         }
 
-        private string Response(string message)
+        private OnlineBatchReceiptResult Response(resultCodeType code)
         {
-            //TODO build response based on onlinebatchresponse           
-            
-            var tempresponse = "Svar fra mottak" + message;
-            return tempresponse;
+            var respons = new OnlineBatchReceiptResult
+            {
+                resultCode = code,
+                resultCodeSpecified = false,
+                Value = ""
+            };
+
+            return respons;
         }
     }
 }
