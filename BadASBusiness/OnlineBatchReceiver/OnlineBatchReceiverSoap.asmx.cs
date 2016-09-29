@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace OnlineBatchReceiver
 {
@@ -25,12 +26,12 @@ namespace OnlineBatchReceiver
             ResponseNamespace = "http://AltInn.no/webservices/",
             Use = System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public OnlineBatchReceiptResult ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
-        {
-            // Authenticate username + passw
+        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
+        {            
             if (Authenticate(username, passwd))
                 // Verify batch vs. XSD (Schema verification)
-                return Response(!VerifyBatchSchema(batch) ? resultCodeType.FAILED_DO_NOT_RETRY : resultCodeType.OK);
+
+                return Response(!VerifyBatchSchema(batch)? resultCodeType.FAILED_DO_NOT_RETRY : resultCodeType.OK);
 
             //TODO: Log
             return Response(resultCodeType.FAILED_DO_NOT_RETRY);
@@ -72,16 +73,19 @@ namespace OnlineBatchReceiver
             return result;
         }
 
-        private OnlineBatchReceiptResult Response(resultCodeType code)
+        private string Response(resultCodeType code)
         {
-            var respons = new OnlineBatchReceiptResult
+            var receiptResult = new OnlineBatchReceiptResult
             {
                 resultCode = code,
                 resultCodeSpecified = false,
                 Value = ""
             };
 
-            return respons;
+            var stringWriter = new StringWriter();
+            XmlSerializer serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
+            serializer.Serialize(stringWriter, receiptResult);
+            return stringWriter.ToString();            
         }
     }
 }
