@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Web;
+using System.Runtime.CompilerServices;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using log4net;
+using log4net.Core;
+using log4net.Repository.Hierarchy;
 
 namespace OnlineBatchReceiver
 {
@@ -19,6 +22,13 @@ namespace OnlineBatchReceiver
     [WebServiceBinding(Name = "OnlineBatchReceiverSoap", Namespace = "http://AltInn.no/webservices/")]
     public class OnlineBatchReceiverSoap : WebService
     {
+        private readonly ILog _logger;
+
+        public OnlineBatchReceiverSoap()
+        {
+            _logger = LogManager.GetLogger(GetType());
+        }
+
         [WebMethod]
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment",
             RequestNamespace = "http://AltInn.no/webservices/",
@@ -27,12 +37,26 @@ namespace OnlineBatchReceiver
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public OnlineBatchReceiptResult ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
+            _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
+
             // Authenticate username + passw
             if (Authenticate(username, passwd))
+            {
+                _logger.Debug("ReceiveOnlineBatchExternalAttachment, User Aithenticated");
                 // Verify batch vs. XSD (Schema verification)
-                return Response(!VerifyBatchSchema(batch) ? resultCodeType.FAILED_DO_NOT_RETRY : resultCodeType.OK);
+                if (!VerifyBatchSchema(batch))
+                {
+                    _logger.Debug("ReceiveOnlineBatchExternalAttachment Validation Failed");
+                    return Response(resultCodeType.FAILED_DO_NOT_RETRY);
+                }
+                else
+                {
+                    _logger.Debug("ReceiveOnlineBatchExternalAttachment Validated OK ");
+                    return Response(resultCodeType.OK);
+                }
+            }
 
-            //TODO: Log
+            _logger.Debug("ReceiveOnlineBatchExternalAttachment Invalid request");
             return Response(resultCodeType.FAILED_DO_NOT_RETRY);
         }
 
