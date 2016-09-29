@@ -24,6 +24,7 @@ namespace OnlineBatchReceiver
         private readonly ILog _logger;
         // Finds the directory where the app is deployed
         private readonly string _filepath = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+        private readonly string _foldername = ConfigurationManager.AppSettings["RecievedXmlFolder"];
 
         public OnlineBatchReceiverSoap()
         {
@@ -60,11 +61,15 @@ namespace OnlineBatchReceiver
                 var serializer = XmlUtils.GetXmlSerializerOfType<DataBatch>();
                 var result = XmlUtils.DeserializeXmlString<DataBatch>(serializer, batch);
 
+                if (FileUtil.AlreadyExists(_filepath, _foldername, username, receiversReference, sequenceNumber))
+                {
+                    _logger.Debug("ReceiveOnlineBatchExternalAttachment Duplicate Request");
+                    return Response(resultCodeType.FAILED_DO_NOT_RETRY);
+                }
                 // Saving payload to disk
                 var filename = Guid.NewGuid() + "_" + username + "_" + receiversReference + "_" + sequenceNumber + ".xml";
-                FileUtil.SaveXmlFileToDisk(_filepath, ConfigurationManager.AppSettings["RecievedXmlFolder"], filename, serializer, result);
-
-                // TODO save attachments as zip
+                FileUtil.SaveXmlFileToDisk(_filepath, _foldername, filename, serializer, result);
+                FileUtil.SaveAttatchmentsAsZip(_filepath, _foldername, filename, attachments); 
             }
             catch (Exception ex)
             {
