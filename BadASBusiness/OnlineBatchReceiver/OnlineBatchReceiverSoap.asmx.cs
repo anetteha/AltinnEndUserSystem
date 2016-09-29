@@ -71,6 +71,8 @@ namespace OnlineBatchReceiver
 
                     serializer.Serialize(file, result);
                     file.Close();
+
+                    // TODO save attachments
                 }
                 catch (Exception ex)
                 {
@@ -109,13 +111,15 @@ namespace OnlineBatchReceiver
                 return false;
             }
 
-            var serializer = new XmlSerializer(typeof(DataBatch));
-            DataBatch data;
+            //var serializer = new XmlSerializer(typeof(DataBatch));
+            //DataBatch data;
 
-            using (TextReader reader = new StringReader(batchXml))
-            {
-                data = (DataBatch)serializer.Deserialize(reader);
-            }
+            //using (TextReader reader = new StringReader(batchXml))
+            //{
+            //    data = (DataBatch)serializer.Deserialize(reader);
+            //}
+
+            // TODO verify xml validation
 
             var schemaSet = new XmlSchemaSet();
             schemaSet.Add("", _filepath + "/xsd/genericbatch.2013.06.xsd");

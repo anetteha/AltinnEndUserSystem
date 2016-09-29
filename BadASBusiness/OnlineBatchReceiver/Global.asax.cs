@@ -10,7 +10,7 @@ namespace OnlineBatchReceiver
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path;
+            var uri = new UriBuilder(Assembly.GetExecutingAssembly().Location).Path;
             GlobalContext.Properties["LogFileName"] = Path.GetDirectoryName(Uri.UnescapeDataString(uri)) + "\\Debug.log"; //log file path
             log4net.Config.XmlConfigurator.Configure();
         }

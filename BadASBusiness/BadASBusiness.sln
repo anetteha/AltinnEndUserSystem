@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BadASBusiness", "BadASBusiness\BadASBusiness.csproj", "{837B7CDF-33D4-4B97-B690-D666E0F98662}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{300EC47F-DA64-4392-A490-0DBCA6A80E57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineBatchReceiver", "OnlineBatchReceiver\OnlineBatchReceiver.csproj", "{C5F20AED-8F58-46B7-A316-24723F262DA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineBatchRecieverTest", "OnlineBatchRecieverTest\OnlineBatchRecieverTest.csproj", "{372255FC-E447-4F78-832F-89F5F0CE31E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C5F20AED-8F58-46B7-A316-24723F262DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5F20AED-8F58-46B7-A316-24723F262DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5F20AED-8F58-46B7-A316-24723F262DA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{372255FC-E447-4F78-832F-89F5F0CE31E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{372255FC-E447-4F78-832F-89F5F0CE31E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{372255FC-E447-4F78-832F-89F5F0CE31E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{372255FC-E447-4F78-832F-89F5F0CE31E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
