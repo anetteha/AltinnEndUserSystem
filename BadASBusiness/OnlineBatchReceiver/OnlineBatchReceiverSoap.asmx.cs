@@ -1,14 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using log4net;
-using log4net.Core;
-using log4net.Repository.Hierarchy;
 
 namespace OnlineBatchReceiver
 {
@@ -51,6 +48,8 @@ namespace OnlineBatchReceiver
                     _logger.Debug("ReceiveOnlineBatchExternalAttachment Validation Failed");
                     return Response(resultCodeType.FAILED_DO_NOT_RETRY);
                 }
+
+                // TODO Save the xml to file
 
                 _logger.Debug("ReceiveOnlineBatchExternalAttachment Validated OK ");
                 return Response(resultCodeType.OK);
