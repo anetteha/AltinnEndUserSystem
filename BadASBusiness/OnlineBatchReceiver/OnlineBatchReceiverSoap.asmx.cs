@@ -49,7 +49,21 @@ namespace OnlineBatchReceiver
                     return Response(resultCodeType.FAILED_DO_NOT_RETRY);
                 }
 
-                // TODO Save the xml to file
+                try
+                {
+                    // Saving payload to disk
+                    var serializer = new XmlSerializer(typeof (DataBatch));
+                    DataBatch result;
+
+                    using (TextReader reader = new StringReader(batch))
+                    {
+                        result = (DataBatch) serializer.Deserialize(reader);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
 
                 _logger.Debug("ReceiveOnlineBatchExternalAttachment Validated OK ");
                 return Response(resultCodeType.OK);
