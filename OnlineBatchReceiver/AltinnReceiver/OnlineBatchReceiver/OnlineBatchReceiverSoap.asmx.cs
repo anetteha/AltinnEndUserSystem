@@ -67,9 +67,9 @@ namespace OnlineBatchReceiver
                     return Response(resultCodeType.FAILED_DO_NOT_RETRY);
                 }
                 // Saving payload to disk
-                var filename = Guid.NewGuid() + "_" + username + "_" + receiversReference + "_" + sequenceNumber + ".xml";
+                var filename = Guid.NewGuid() + "_" + username + "_" + receiversReference + "_" + sequenceNumber;
                 FileUtil.SaveXmlFileToDisk(_filepath, _foldername, filename, serializer, result);
-                FileUtil.SaveAttatchmentsAsZip(_filepath, _foldername, filename, attachments); 
+                FileUtil.SaveAttatchmentsAsZip(_filepath, _foldername, filename, attachments);
             }
             catch (Exception ex)
             {
