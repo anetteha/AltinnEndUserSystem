@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Web.Services;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 using log4net;
 using log4net.Core;
 using log4net.Repository.Hierarchy;
@@ -96,16 +97,19 @@ namespace OnlineBatchReceiver
             return result;
         }
 
-        private OnlineBatchReceiptResult Response(resultCodeType code)
+        private string Response(resultCodeType code)
         {
-            var respons = new OnlineBatchReceiptResult
+            var receiptResult = new OnlineBatchReceiptResult
             {
                 resultCode = code,
                 resultCodeSpecified = false,
                 Value = ""
             };
 
-            return respons;
+            var stringWriter = new StringWriter();
+            XmlSerializer serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
+            serializer.Serialize(stringWriter, receiptResult);
+            return stringWriter.ToString();            
         }
     }
 }
