@@ -51,11 +51,9 @@ namespace OnlineBatchReceiver
                     _logger.Debug("ReceiveOnlineBatchExternalAttachment Validation Failed");
                     return Response(resultCodeType.FAILED_DO_NOT_RETRY);
                 }
-                else
-                {
-                    _logger.Debug("ReceiveOnlineBatchExternalAttachment Validated OK ");
-                    return Response(resultCodeType.OK);
-                }
+
+                _logger.Debug("ReceiveOnlineBatchExternalAttachment Validated OK ");
+                return Response(resultCodeType.OK);
             }
 
             _logger.Debug("ReceiveOnlineBatchExternalAttachment Invalid request");
@@ -103,12 +101,12 @@ namespace OnlineBatchReceiver
             var receiptResult = new OnlineBatchReceiptResult
             {
                 resultCode = code,
-                resultCodeSpecified = false,
+                resultCodeSpecified = true,
                 Value = ""
             };
 
             var stringWriter = new StringWriter();
-            XmlSerializer serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
+            var serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
             serializer.Serialize(stringWriter, receiptResult);
             return stringWriter.ToString();            
         }
