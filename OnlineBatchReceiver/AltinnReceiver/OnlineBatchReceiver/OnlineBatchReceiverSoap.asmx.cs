@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Web.Services;
-using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using log4net;
+using OnlineBatchReceiver.Utils;
 
 namespace OnlineBatchReceiver
 {
@@ -21,6 +22,7 @@ namespace OnlineBatchReceiver
     public class OnlineBatchReceiverSoap : WebService
     {
         private readonly ILog _logger;
+        // Finds the directory where the app is deployed
         private readonly string _filepath = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
 
         public OnlineBatchReceiverSoap()
@@ -34,7 +36,7 @@ namespace OnlineBatchReceiver
             ResponseNamespace = "http://AltInn.no/webservices/",
             Use = System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
+        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [XmlElement(DataType = "base64Binary")] byte[] attachments)
         {
             _logger.Info("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
             _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username + " Batch: " + batch);
@@ -47,7 +49,7 @@ namespace OnlineBatchReceiver
             }
             _logger.Debug("ReceiveOnlineBatchExternalAttachment, User Aithenticated");
             // Verify batch vs. XSD (Schema verification)
-            if (!ValidateBatchXml(batch))
+            if (!XmlUtils.ValidateBatchXml(batch, _filepath, new List<string> { "/xsd/genericbatch.2013.06.xsd" }))
             {
                 _logger.Debug("ReceiveOnlineBatchExternalAttachment Validation Failed");
                 return Response(resultCodeType.FAILED_DO_NOT_RETRY);
@@ -55,25 +57,12 @@ namespace OnlineBatchReceiver
 
             try
             {
-                // Deserializing object 
-                var serializer = new XmlSerializer(typeof(DataBatch));
-                DataBatch result;
-
-                using (TextReader reader = new StringReader(batch))
-                {
-                    result = (DataBatch)serializer.Deserialize(reader);
-                }
+                var serializer = XmlUtils.GetXmlSerializerOfType<DataBatch>();
+                var result = XmlUtils.DeserializeXmlString<DataBatch>(serializer, batch);
 
                 // Saving payload to disk
-                var path = Path.Combine(_filepath + "\\RecievedXml\\");
-                Directory.CreateDirectory(path);
-
-                var pathAndFile = Path.Combine(path, SafeFileName(
-                    Guid.NewGuid() + "_" + username + "_" + receiversReference + "_" + sequenceNumber + ".xml"));
-                var file = File.Create(pathAndFile);
-
-                serializer.Serialize(file, result);
-                file.Close();
+                var filename = Guid.NewGuid() + "_" + username + "_" + receiversReference + "_" + sequenceNumber + ".xml";
+                FileUtil.SaveXmlFileToDisk(_filepath, ConfigurationManager.AppSettings["RecievedXmlFolder"], filename, serializer, result);
 
                 // TODO save attachments as zip
             }
@@ -87,29 +76,10 @@ namespace OnlineBatchReceiver
             return Response(resultCodeType.OK);
         }
 
-        private bool Authenticate(string username, string password)
+        private static bool Authenticate(string username, string password)
         {
-            // Trust everyone :)
-            return true;
-        }
-
-        private bool ValidateBatchXml(string batchXml)
-        {
-            try
-            {
-                var doc = new XmlDocument();
-                doc.Schemas.Add("", _filepath + "/xsd/genericbatch.2013.06.xsd");
-                
-                doc.LoadXml(batchXml);
-                doc.Validate(xmlValidationEventHandler);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex);
-                return false;
-            }
-
-            return true;
+            // User is always Altinn, password cannot be empty
+            return username == "Altinn" && !string.IsNullOrEmpty(password);
         }
 
         private string Response(resultCodeType code)
@@ -121,28 +91,7 @@ namespace OnlineBatchReceiver
                 Value = ""
             };
 
-            var stringWriter = new StringWriter();
-            var serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
-            serializer.Serialize(stringWriter, receiptResult);
-            return stringWriter.ToString();
-        }
-
-        private static void xmlValidationEventHandler(object sender, ValidationEventArgs e)
-        {
-            switch (e.Severity)
-            {
-                case XmlSeverityType.Warning:
-                    throw new XmlSchemaValidationException();
-                case XmlSeverityType.Error:
-                    throw new XmlSchemaValidationException();
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        private static string SafeFileName(string path)
-        {
-            return path.Replace("\\", "").Replace("/", "").Replace("\"", "").Replace("*", "").Replace(":", "").Replace("?", "").Replace("<", "").Replace(">", "").Replace("|", "");
+            return XmlUtils.SerializeXmlObjectToString(receiptResult);
         }
     }
 }
