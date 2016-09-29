@@ -32,7 +32,11 @@ namespace OnlineBatchReceiver.Utils
         public static bool AlreadyExists(string filepath, string folderName, string username,
             string receiversReference, long sequenceNumber)
         {
-            return false;
+            var path = Path.Combine(filepath + "\\" + folderName + "\\");
+            var dir = new DirectoryInfo(path);
+            var filesInDir = dir.GetFiles("*" + receiversReference + "*.*");
+
+            return filesInDir.Length > 0;
         }
 
         public static void SaveAttatchmentsAsZip(string filepath, string folderName, string filename, byte[] attachments)
