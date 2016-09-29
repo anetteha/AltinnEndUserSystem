@@ -36,7 +36,7 @@ namespace OnlineBatchReceiver
             ResponseNamespace = "http://AltInn.no/webservices/",
             Use = System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public OnlineBatchReceiptResult ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
+        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
             _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
 
