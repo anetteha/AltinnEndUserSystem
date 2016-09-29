@@ -38,7 +38,8 @@ namespace OnlineBatchReceiver
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
-            _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
+            _logger.Info("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
+            _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username + " Batch: "+ batch);
 
             // Authenticate username + passw
             if (Authenticate(username, passwd))
