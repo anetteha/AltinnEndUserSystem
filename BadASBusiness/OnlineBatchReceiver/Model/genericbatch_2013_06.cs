@@ -166,7 +166,7 @@ public partial class DataUnit {
     
     private Metadata[] metadataListField;
     
-    private DataUnitApproversApprover[][] approversField;
+    private DataUnitApproversApprover[] approversField;
     
     private DataUnitFormTask formTaskField;
     
@@ -189,7 +189,7 @@ public partial class DataUnit {
     
     /// <remarks/>
     [System.Xml.Serialization.XmlArrayItemAttribute("Approver", typeof(DataUnitApproversApprover), IsNullable=false)]
-    public DataUnitApproversApprover[][] Approvers {
+    public DataUnitApproversApprover[] Approvers {
         get {
             return this.approversField;
         }

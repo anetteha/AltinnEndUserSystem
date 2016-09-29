@@ -70,12 +70,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FormTaskSkjema.cs" />
-    <Compile Include="genericbatch_2013_06.cs" />
+    <Compile Include="Model\FormTaskSkjema.cs" />
+    <Compile Include="Model\genericbatch_2013_06.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="OnlineBatchReceipt.cs" />
+    <Compile Include="Model\OnlineBatchReceipt.cs" />
     <Compile Include="OnlineBatchReceiverSoap.asmx.cs">
       <DependentUpon>OnlineBatchReceiverSoap.asmx</DependentUpon>
       <SubType>Component</SubType>

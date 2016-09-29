@@ -12,15 +12,16 @@ namespace OnlineBatchReceiver
     /// <summary>
     /// Summary description for OnlineBatchReceiverSoap
     /// </summary>
-    //[WebService(Namespace = "http://tempuri.org/")]
-    //[WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    //[System.ComponentModel.ToolboxItem(false)]
+    // [WebService(Namespace = "http://tempuri.org/")]
+    // [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
+    // [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
     [WebServiceBinding(Name = "OnlineBatchReceiverSoap", Namespace = "http://AltInn.no/webservices/")]
     public class OnlineBatchReceiverSoap : WebService
     {
         private readonly ILog _logger;
+        private readonly string _filepath = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
 
         public OnlineBatchReceiverSoap()
         {
@@ -28,15 +29,15 @@ namespace OnlineBatchReceiver
         }
 
         [WebMethod]
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment",
+        [System.Web.Services.Protocols.SoapDocumentMethod("http://AltInn.no/webservices/ReceiveOnlineBatchExternalAttachment",
             RequestNamespace = "http://AltInn.no/webservices/",
             ResponseNamespace = "http://AltInn.no/webservices/",
             Use = System.Web.Services.Description.SoapBindingUse.Literal,
             ParameterStyle = System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [System.Xml.Serialization.XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
+        public string ReceiveOnlineBatchExternalAttachment(string username, string passwd, string receiversReference, long sequenceNumber, string batch, [XmlElementAttribute(DataType = "base64Binary")] byte[] attachments)
         {
             _logger.Info("ReceiveOnlineBatchExternalAttachment Recieved from: " + username);
-            _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username + " Batch: "+ batch);
+            _logger.Debug("ReceiveOnlineBatchExternalAttachment Recieved from: " + username + " Batch: " + batch);
 
             // Authenticate username + passw
             if (Authenticate(username, passwd))
@@ -51,17 +52,29 @@ namespace OnlineBatchReceiver
 
                 try
                 {
-                    // Saving payload to disk
-                    var serializer = new XmlSerializer(typeof (DataBatch));
+                    // Deserializing object 
+                    var serializer = new XmlSerializer(typeof(DataBatch));
                     DataBatch result;
 
                     using (TextReader reader = new StringReader(batch))
                     {
-                        result = (DataBatch) serializer.Deserialize(reader);
+                        result = (DataBatch)serializer.Deserialize(reader);
                     }
+
+                    // Saving payload to disk
+                    var path = Path.Combine(_filepath + "\\RecievedXml\\");
+                    Directory.CreateDirectory(path);
+
+                    var pathAndFile = Path.Combine(path, SafeFileName(
+                        DateTime.Now + "_" + username + "_" + receiversReference + "_" + sequenceNumber + ".xml"));
+                    var file = File.Create(pathAndFile);
+
+                    serializer.Serialize(file, result);
+                    file.Close();
                 }
                 catch (Exception ex)
                 {
+                    _logger.Error(ex);
                     return ex.Message;
                 }
 
@@ -73,13 +86,14 @@ namespace OnlineBatchReceiver
             return Response(resultCodeType.FAILED_DO_NOT_RETRY);
         }
 
+
         private bool Authenticate(string username, string password)
         {
             // Trust everyone :)
             return true;
         }
 
-        private static bool VerifyBatchSchema(string batchXml)
+        private bool VerifyBatchSchema(string batchXml)
         {
             //Validerer skjema med xdocument
             var result = true;
@@ -91,18 +105,24 @@ namespace OnlineBatchReceiver
             }
             catch (Exception ex)
             {
-                //TODO: Log
+                _logger.Error(ex);
                 return false;
             }
 
-            var filepath = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+            var serializer = new XmlSerializer(typeof(DataBatch));
+            DataBatch data;
+
+            using (TextReader reader = new StringReader(batchXml))
+            {
+                data = (DataBatch)serializer.Deserialize(reader);
+            }
 
             var schemaSet = new XmlSchemaSet();
-            schemaSet.Add("", filepath + "/xsd/genericbatch.2013.06.xsd");
+            schemaSet.Add("", _filepath + "/xsd/genericbatch.2013.06.xsd");
 
             xdoc.Validate(schemaSet, (sender, e) =>
             {
-                //TODO: Log
+                _logger.Debug("Validating xml request");
                 result = false;
             });
 
@@ -121,7 +141,21 @@ namespace OnlineBatchReceiver
             var stringWriter = new StringWriter();
             var serializer = new XmlSerializer(typeof(OnlineBatchReceiptResult));
             serializer.Serialize(stringWriter, receiptResult);
-            return stringWriter.ToString();            
+            return stringWriter.ToString();
+        }
+
+        private static string SafeFileName(string path)
+        {
+            return path
+                .Replace("\\", "")
+                .Replace("/", "")
+                .Replace("\"", "")
+                .Replace("*", "")
+                .Replace(":", "")
+                .Replace("?", "")
+                .Replace("<", "")
+                .Replace(">", "")
+                .Replace("|", "");
         }
     }
 }

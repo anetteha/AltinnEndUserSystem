@@ -1,10 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using log4net;
-using log4net.Appender;
-using log4net.Repository;
 
 namespace OnlineBatchReceiver
 {
@@ -14,7 +11,7 @@ namespace OnlineBatchReceiver
         protected void Application_Start(object sender, EventArgs e)
         {
             var uri = new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path;
-            GlobalContext.Properties["LogFileName"] = Path.GetDirectoryName(Uri.UnescapeDataString(uri)) + "\\Debug.log"; // @"E:\\file1"; //log file path
+            GlobalContext.Properties["LogFileName"] = Path.GetDirectoryName(Uri.UnescapeDataString(uri)) + "\\Debug.log"; //log file path
             log4net.Config.XmlConfigurator.Configure();
         }
 
