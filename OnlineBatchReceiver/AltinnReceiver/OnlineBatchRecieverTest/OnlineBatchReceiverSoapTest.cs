@@ -11,8 +11,8 @@ namespace OnlineBatchRecieverTest
     [TestFixture]
     public class OnlineBatchReceiverSoapTest
     {
-        [TearDown]
-        public void TearDown()
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
         {
             // Delete files generated in the test
             var path = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
