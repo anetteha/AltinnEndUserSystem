@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using OnlineBatchReceiver;
 
@@ -7,6 +11,36 @@ namespace OnlineBatchRecieverTest
     [TestFixture]
     public class OnlineBatchReceiverSoapTest
     {
+        [TearDown]
+        public void TearDown()
+        {
+            // Delete files generated in the test
+            var path = Path.GetDirectoryName(Uri.UnescapeDataString(new UriBuilder(Assembly.GetExecutingAssembly().CodeBase).Path));
+            var files = GetFiles(path, ".xml", ".zip");
+            foreach (var file in files)
+            {
+                try
+                {
+                    file.Attributes = FileAttributes.Normal;
+                    File.Delete(file.FullName);
+                }
+                catch
+                {
+                    // ignored
+                }
+            }
+        }
+
+        private static IEnumerable<FileInfo> GetFiles(string path, params string[] extensions)
+        {
+            var list = new List<FileInfo>();
+            foreach (var ext in extensions)
+                list.AddRange(new DirectoryInfo(path).GetFiles("*" + ext).Where(p =>
+                      p.Extension.Equals(ext, StringComparison.CurrentCultureIgnoreCase))
+                      .ToArray());
+            return list;
+        }
+
         [Test]
         public void ReceiveOnlineBatchExternalAttachment_Returns_FAILED_DO_NOT_RETRY_when_InvalidUser_and_InvalidPassword_and_InvalidXml()
         {
