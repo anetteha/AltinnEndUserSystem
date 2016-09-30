@@ -59,6 +59,7 @@ namespace OnlineBatchReceiver
             try
             {
                 var serializer = XmlUtils.GetXmlSerializerOfType<DataBatch>();
+                // result is a DataBack object, which can be sent async to a recipient in the reciever application portfolio
                 var result = XmlUtils.DeserializeXmlString<DataBatch>(serializer, batch);
 
                 if (FileUtil.AlreadyExists(_filepath, _foldername, username, receiversReference, sequenceNumber))
