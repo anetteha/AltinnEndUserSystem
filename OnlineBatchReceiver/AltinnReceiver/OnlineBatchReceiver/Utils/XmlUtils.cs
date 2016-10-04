@@ -7,16 +7,30 @@ using System.Xml.Serialization;
 
 namespace OnlineBatchReceiver.Utils
 {
+    /// <summary>
+    /// Utils for handling XML
+    /// </summary>
     public static class XmlUtils
     {
+        /// <summary>
+        /// Creating XmlSerializer object 
+        /// </summary>
+        /// <typeparam name="T">T</typeparam>
+        /// <returns>an object of type T</returns>
         public static XmlSerializer GetXmlSerializerOfType<T>()
         {
-            // Creating XmlSerializer object 
             var serializer = new XmlSerializer(typeof(T));
 
             return serializer;
         }
 
+        /// <summary>
+        /// Deserializing an XMLstring
+        /// </summary>
+        /// <typeparam name="T">T</typeparam>
+        /// <param name="serializer">The XmlSerializer object</param>
+        /// <param name="batch">batch as string</param>
+        /// <returns>T</returns>
         public static T DeserializeXmlString<T>(XmlSerializer serializer, string batch)
         {
             T result;
@@ -29,6 +43,13 @@ namespace OnlineBatchReceiver.Utils
             return result;
         }
 
+        /// <summary>
+        /// XML valitation
+        /// </summary>
+        /// <param name="batchXml">batch as string</param>
+        /// <param name="filepath">the location of the file</param>
+        /// <param name="xmlSchemas">a list of schemas</param>
+        /// <returns>true or false</returns>
         public static bool ValidateBatchXml(string batchXml, string filepath, List<string> xmlSchemas)
         {
             try
@@ -51,6 +72,11 @@ namespace OnlineBatchReceiver.Utils
             return true;
         }
 
+        /// <summary>
+        /// XML Validation EventHandler
+        /// </summary>
+        /// <param name="sender">the sender</param>
+        /// <param name="e">validation event argument</param>
         private static void xmlValidationEventHandler(object sender, ValidationEventArgs e)
         {
             switch (e.Severity)
@@ -64,6 +90,12 @@ namespace OnlineBatchReceiver.Utils
             }
         }
 
+        /// <summary>
+        /// Serializing an XML object to string
+        /// </summary>
+        /// <typeparam name="T">T</typeparam>
+        /// <param name="receiptResult">the OnlineBatchReceiptResult</param>
+        /// <returns>XML as string</returns>
         public static string SerializeXmlObjectToString<T>(T receiptResult)
         {
             var stringWriter = new StringWriter();

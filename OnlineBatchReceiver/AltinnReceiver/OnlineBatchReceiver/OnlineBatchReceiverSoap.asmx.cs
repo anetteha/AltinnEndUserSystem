@@ -82,12 +82,22 @@ namespace OnlineBatchReceiver
             return Response(resultCodeType.OK);
         }
 
+        /// <summary>
+        /// Authenticate user, in this example the user is always Altinn, and password cannot be empty
+        /// </summary>
+        /// <param name="username">the username</param>
+        /// <param name="password">the password</param>
+        /// <returns>true or false</returns>
         private static bool Authenticate(string username, string password)
         {
-            // User is always Altinn, password cannot be empty
             return username == "Altinn" && !string.IsNullOrEmpty(password);
         }
 
+        /// <summary>
+        /// return OnlineBatchReceiptResult object as a string
+        /// </summary>
+        /// <param name="code">the resultCodeType</param>
+        /// <returns>object as string</returns>
         private string Response(resultCodeType code)
         {
             var receiptResult = new OnlineBatchReceiptResult
